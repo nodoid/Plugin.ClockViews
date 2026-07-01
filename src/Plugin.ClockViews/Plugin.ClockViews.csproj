@@ -19,11 +19,15 @@
 		<Title>Plugin.ClockViews</Title>
 		<Description>Analog and digital clock views for .NET MAUI.</Description>
 		<Authors>Paul F. Johnson</Authors>
+		<Copyright>Paul F Johnson</Copyright>
 		<PackageTags>maui;clock;analog-clock;digital-clock;control;view</PackageTags>
 		<Version>1.0</Version>
 		<PackageReleaseNotes>Initial release</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageProjectUrl>https://github.com/nodoid/Plugin.ClockViews</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/nodoid/Plugin.ClockViews</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
