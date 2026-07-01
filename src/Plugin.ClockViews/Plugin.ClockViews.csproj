@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<!-- A plain net10.0 target carries the platform-agnostic clock logic so it can be
+		     unit-tested without a platform head. The platform TFMs carry the MAUI control. -->
+		<TargetFrameworks>net10.0;net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
+		<!-- Windows is enabled unconditionally so the target is always present, regardless of build OS. -->
+		<TargetFrameworks>$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
+
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Allows the net*-windows target to be built/restored on non-Windows hosts. -->
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+
+		<!-- NuGet package metadata -->
+		<PackageId>Plugin.ClockViews</PackageId>
+		<Title>Plugin.ClockViews</Title>
+		<Description>Analog and digital clock views for .NET MAUI.</Description>
+		<Authors>Paul F. Johnson</Authors>
+		<PackageTags>maui;clock;analog-clock;digital-clock;control;view</PackageTags>
+		<Version>1.0</Version>
+		<PackageReleaseNotes>Initial release</PackageReleaseNotes>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+	</PropertyGroup>
+
+	<!-- Platform-specific TFMs (those containing a '-') build the full MAUI control. -->
+	<PropertyGroup Condition="$(TargetFramework.Contains('-'))">
+		<UseMaui>true</UseMaui>
+		<DefineConstants>$(DefineConstants);PLATFORM_TFM</DefineConstants>
+	</PropertyGroup>
+
+	<!-- The MAUI controls (GraphicsView, BindableProperty) are only compiled for platform TFMs.
+	     The plain net10.0 target keeps just the platform-agnostic drawing/math logic. -->
+	<ItemGroup Condition="!$(TargetFramework.Contains('-'))">
+		<Compile Remove="Controls\**\*.cs" />
+		<PackageReference Include="Microsoft.Maui.Graphics" Version="10.0.20" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-'))">
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="LICENSE.txt" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+</Project>

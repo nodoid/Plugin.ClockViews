@@ -1,0 +1,30 @@
+# .NET / MAUI build output
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+[Bb]in/
+[Oo]bj/
+
+# Rider / VS
+.idea/
+.vs/
+*.user
+*.suo
+*.userprefs
+
+# MAUI / build artifacts
+*.binlog
+project.lock.json
+artifacts/
+
+# macOS
+.DS_Store
+
+# NuGet
+*.nupkg
+*.snupkg

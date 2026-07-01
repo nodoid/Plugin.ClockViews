@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:clock="clr-namespace:Plugin.ClockViews;assembly=Plugin.ClockViews"
+             x:Class="Plugin.ClockViews.Sample.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,40"
+            Spacing="24"
+            HorizontalOptions="Center">
+
+            <!-- Clock type selector -->
+            <Label
+                Text="Clock type"
+                Style="{StaticResource SubHeadline}"
+                HorizontalOptions="Center" />
+
+            <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center">
+                <RadioButton x:Name="AnalogOption" Content="Analog" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="ValveOption" Content="Valve" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="FlipOption" Content="Flip" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="MeltOption" Content="Melt" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="BeamOption" Content="Beam" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="WatchOption" Content="Watch" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
+            </FlexLayout>
+
+            <!-- Sci-Fi theme selector (applies to the Beam clock) -->
+            <VerticalStackLayout x:Name="ThemePanel" Spacing="8" HorizontalOptions="Center" IsVisible="False">
+                <Label Text="Sci-Fi theme" HorizontalOptions="Center" />
+                <HorizontalStackLayout Spacing="24" HorizontalOptions="Center">
+                    <RadioButton x:Name="DrWhoOption" Content="Dr Who" GroupName="sciFiTheme" IsChecked="True" CheckedChanged="OnThemeChanged" />
+                    <RadioButton x:Name="StarTrekOption" Content="Star Trek" GroupName="sciFiTheme" CheckedChanged="OnThemeChanged" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Watch theme selector (applies to the Watch clock) -->
+            <VerticalStackLayout x:Name="WatchThemePanel" Spacing="8" HorizontalOptions="Center" IsVisible="False">
+                <Label Text="Watch theme" HorizontalOptions="Center" />
+                <HorizontalStackLayout Spacing="18" HorizontalOptions="Center">
+                    <RadioButton x:Name="Watch80sOption" Content="80s Digital" GroupName="watchTheme" CheckedChanged="OnWatchThemeChanged" />
+                    <RadioButton x:Name="WatchAppleOption" Content="Apple" GroupName="watchTheme" CheckedChanged="OnWatchThemeChanged" />
+                    <RadioButton x:Name="WatchPixelOption" Content="Pixel" GroupName="watchTheme" CheckedChanged="OnWatchThemeChanged" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Clock display (only the selected type is visible) -->
+            <clock:ClockView
+                x:Name="AnalogClock"
+                IsRunning="True"
+                CountFrom="00:00:10"
+                FaceColor="#512BD4"
+                HandColor="#512BD4"
+                WidthRequest="240"
+                HeightRequest="240"
+                HorizontalOptions="Center" />
+
+            <clock:ValveClockView
+                x:Name="ValveClock"
+                IsRunning="True"
+                IsVisible="False"
+                CountFrom="00:00:10"
+                WidthRequest="340"
+                HeightRequest="120"
+                HorizontalOptions="Center" />
+
+            <clock:FlipClock
+                x:Name="FlipClock"
+                IsRunning="True"
+                IsVisible="False"
+                CountFrom="00:00:10"
+                WidthRequest="320"
+                HeightRequest="150"
+                HorizontalOptions="Center" />
+
+            <clock:MeltingClock
+                x:Name="MeltClock"
+                IsRunning="True"
+                IsVisible="False"
+                CountFrom="00:00:10"
+                WidthRequest="300"
+                HeightRequest="130"
+                HorizontalOptions="Center" />
+
+            <clock:DematerialiseClock
+                x:Name="DematClock"
+                IsRunning="True"
+                IsVisible="False"
+                CountFrom="00:00:10"
+                WidthRequest="300"
+                HeightRequest="130"
+                HorizontalOptions="Center" />
+
+            <clock:WatchClock
+                x:Name="WatchClock"
+                IsRunning="True"
+                IsVisible="False"
+                CountFrom="00:00:10"
+                WatchBorderThickness="Medium"
+                WidthRequest="300"
+                HeightRequest="170"
+                HorizontalOptions="Center" />
+
+            <!-- Options -->
+            <Label
+                Text="Options"
+                Style="{StaticResource SubHeadline}"
+                HorizontalOptions="Center" />
+
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                  ColumnSpacing="16" RowSpacing="12" WidthRequest="280" HorizontalOptions="Center">
+
+                <Label x:Name="LiveLabel" Grid.Row="0" Grid.Column="0" Text="Live (running)" VerticalOptions="Center" />
+                <Switch x:Name="LiveSwitch" Grid.Row="0" Grid.Column="1" IsToggled="True" Toggled="OnRunningToggled" />
+
+                <Label Grid.Row="1" Grid.Column="0" Text="Show seconds" VerticalOptions="Center" />
+                <Switch Grid.Row="1" Grid.Column="1" Toggled="OnSecondsToggled" />
+
+                <Label Grid.Row="2" Grid.Column="0" Text="24-hour" VerticalOptions="Center" />
+                <Switch Grid.Row="2" Grid.Column="1" IsToggled="True" Toggled="On24HourToggled" />
+
+                <Label Grid.Row="3" Grid.Column="0" Text="Show date" VerticalOptions="Center" />
+                <Switch Grid.Row="3" Grid.Column="1" Toggled="OnShowDateToggled" />
+
+                <Label Grid.Row="4" Grid.Column="0" Text="Date: day first" VerticalOptions="Center" />
+                <Switch Grid.Row="4" Grid.Column="1" IsToggled="True" Toggled="OnDayThenMonthToggled" />
+
+                <Label Grid.Row="5" Grid.Column="0" Text="UTC" VerticalOptions="Center" />
+                <Switch x:Name="UtcSwitch" Grid.Row="5" Grid.Column="1" Toggled="OnUtcToggled" />
+
+                <Label x:Name="UnixLabel" Grid.Row="6" Grid.Column="0" Text="Unix time (not analog or watch)" VerticalOptions="Center" IsEnabled="False" />
+                <Switch x:Name="UnixSwitch" Grid.Row="6" Grid.Column="1" Toggled="OnUnixToggled" IsEnabled="False" />
+            </Grid>
+
+            <Label
+                Text="Countdown (from 10s, alarms at zero)"
+                Style="{StaticResource SubHeadline}"
+                HorizontalOptions="Center" />
+
+            <HorizontalStackLayout Spacing="16" HorizontalOptions="Center">
+                <Label Text="Countdown timer" VerticalOptions="Center" />
+                <Switch x:Name="CountdownSwitch" Toggled="OnCountdownToggled" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Button x:Name="StartButton" Text="Start" Clicked="OnStartClicked" IsEnabled="False" />
+                <Button x:Name="StopButton" Text="Stop" Clicked="OnStopClicked" IsEnabled="False" />
+                <Button x:Name="ResetButton" Text="Reset" Clicked="OnResetClicked" IsEnabled="False" />
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
