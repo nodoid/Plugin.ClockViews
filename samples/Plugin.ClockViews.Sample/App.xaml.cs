@@ -11,6 +11,16 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		return new Window(new AppShell());
+		var window = new Window(new AppShell());
+
+		// Open large enough (on desktop) to show every option including the countdown buttons.
+		const double width = 540;
+		const double height = 1150;
+		window.Width = width;
+		window.Height = height;
+		window.MinimumWidth = 420;
+		window.MinimumHeight = 700;
+
+		return window;
 	}
 }

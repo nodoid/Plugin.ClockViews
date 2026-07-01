@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:clock="clr-namespace:Plugin.ClockViews;assembly=Plugin.ClockViews"
-             x:Class="Plugin.ClockViews.Sample.MainPage">
+             x:Class="Plugin.ClockViews.Sample.MainPage"
+             Shell.NavBarIsVisible="False">
 
     <ScrollView>
         <VerticalStackLayout
@@ -16,14 +17,15 @@
                 Style="{StaticResource SubHeadline}"
                 HorizontalOptions="Center" />
 
-            <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center">
-                <RadioButton x:Name="AnalogOption" Content="Analog" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
-                <RadioButton x:Name="ValveOption" Content="Valve" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
-                <RadioButton x:Name="FlipOption" Content="Flip" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
-                <RadioButton x:Name="MeltOption" Content="Melt" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
-                <RadioButton x:Name="BeamOption" Content="Beam" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
-                <RadioButton x:Name="WatchOption" Content="Watch" GroupName="clockType" Margin="10,2" CheckedChanged="OnClockTypeChanged" />
-            </FlexLayout>
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto"
+                  ColumnSpacing="8" RowSpacing="10" WidthRequest="360" HorizontalOptions="Center">
+                <RadioButton x:Name="AnalogOption" Grid.Row="0" Grid.Column="0" Content="Analog" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="ValveOption" Grid.Row="0" Grid.Column="1" Content="Valve" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="FlipOption" Grid.Row="0" Grid.Column="2" Content="Flip" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="MeltOption" Grid.Row="1" Grid.Column="0" Content="Melt" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="BeamOption" Grid.Row="1" Grid.Column="1" Content="Beam" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="WatchOption" Grid.Row="1" Grid.Column="2" Content="Watch" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+            </Grid>
 
             <!-- Sci-Fi theme selector (applies to the Beam clock) -->
             <VerticalStackLayout x:Name="ThemePanel" Spacing="8" HorizontalOptions="Center" IsVisible="False">
