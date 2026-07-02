@@ -110,6 +110,46 @@ the same tick. **UTC and Unix time do not apply** to this clock.
                       ClockTimeZone="Europe/London;America/New_York;Asia/Tokyo" />
 ```
 
+### Timezone ids for `ClockTimeZone`
+
+`ClockTimeZone` takes system timezone ids, separated by `;` or `,`. Any id accepted by
+`TimeZoneInfo.FindSystemTimeZoneById` works — IANA ids are shown below and are accepted on all
+platforms (.NET uses ICU, so IANA ids work on Windows too). The label shown above each clock is the
+part after the last `/`, with underscores turned into spaces (e.g. `America/New_York` → "New York").
+
+| Timezone id | Shown as | Region |
+|-------------|----------|--------|
+| `Pacific/Auckland` | Auckland | New Zealand |
+| `Australia/Sydney` | Sydney | Australia (AEST/AEDT) |
+| `Australia/Brisbane` | Brisbane | Australia (AEST) |
+| `Australia/Adelaide` | Adelaide | Australia (ACST) |
+| `Australia/Perth` | Perth | Australia (AWST) |
+| `Asia/Tokyo` | Tokyo | Japan |
+| `Asia/Shanghai` | Shanghai | China |
+| `Asia/Singapore` | Singapore | Singapore |
+| `Asia/Kolkata` | Kolkata | India |
+| `Asia/Dubai` | Dubai | UAE |
+| `Europe/Moscow` | Moscow | Russia |
+| `Africa/Johannesburg` | Johannesburg | South Africa |
+| `Europe/Paris` | Paris | Central Europe |
+| `Europe/London` | London | UK |
+| `UTC` | UTC | Coordinated Universal Time |
+| `Atlantic/Reykjavik` | Reykjavik | Iceland |
+| `America/Sao_Paulo` | Sao Paulo | Brazil |
+| `America/New_York` | New York | US Eastern |
+| `America/Chicago` | Chicago | US Central |
+| `America/Denver` | Denver | US Mountain |
+| `America/Los_Angeles` | Los Angeles | US Pacific |
+| `America/Anchorage` | Anchorage | Alaska |
+| `Pacific/Honolulu` | Honolulu | Hawaii |
+
+To list every id available on the current device:
+
+```csharp
+foreach (var tz in TimeZoneInfo.GetSystemTimeZones())
+    Console.WriteLine(tz.Id);
+```
+
 ---
 
 ## Countdown & alarm
