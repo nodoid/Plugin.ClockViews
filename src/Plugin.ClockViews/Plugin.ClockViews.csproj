@@ -17,10 +17,10 @@
 		<!-- NuGet package metadata -->
 		<PackageId>Plugin.ClockViews</PackageId>
 		<Title>Plugin.ClockViews</Title>
-		<Description>Analog and digital clock views for .NET MAUI.</Description>
+		<Description>Analog and digital clock views for .NET MAUI — analog, valve (Nixie), flip, melting, sci-fi dematerialise, watch faces, and a multi-timezone world clock (MultiTimeClock) showing local time plus up to three zones, each as a mini clock face with the timezone name above it. Set the additional zones with the ClockTimeZone bindable (e.g. "Europe/London;America/New_York;Asia/Tokyo") and the face style with Face.</Description>
 		<Authors>Paul F. Johnson</Authors>
 		<Copyright>Paul F Johnson</Copyright>
-		<PackageTags>maui;clock;analog-clock;digital-clock;control;view</PackageTags>
+		<PackageTags>maui;clock;analog-clock;digital-clock;world-clock;timezone;control;view</PackageTags>
 		<Version>1.0.1</Version>
 		<PackageReleaseNotes>1.0.1: Added world time clocks. 1.0: Initial release.</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
