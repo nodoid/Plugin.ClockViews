@@ -7,7 +7,7 @@ Targets **.NET 10** for Android, iOS, Mac Catalyst and **Windows**, plus a plain
 that carries the platform-agnostic drawing/logic so it can be unit-tested without a platform head.
 
 - **Author:** Paul F. Johnson
-- **Version:** 1.0
+- **Version:** 1.0.1
 - **License:** DILLIGAF (see `LICENSE.txt`)
 
 ---
@@ -45,6 +45,7 @@ xmlns:clock="clr-namespace:Plugin.ClockViews;assembly=Plugin.ClockViews"
 | `MeltingClock` | Digits melt away and the new digit forms beneath (~0.8s). |
 | `DematerialiseClock` | Sci-fi dematerialise/rematerialise (`SciFiTheme`: `DrWho` flicker-fade, `StarTrek` transporter sparkle). |
 | `WatchClock` | Wristwatch faces (`WatchTheme`: `EightiesDigital` 7-segment, `AppleWatch`, `PixelWatch`). |
+| `MultiTimeClock` | "World" clock — local time plus up to three other time zones, each a mini clock face (`Face`) with the zone name centred above it. |
 
 All digital clocks flash the `:` separator every half-second and show the date in **their own style**
 (valve = glowing filament, flip = a flip card, melt/dematerialise = styled text, 80s watch = 7-segment
@@ -66,7 +67,7 @@ Every clock inherits these bindable properties:
 | `ShowDate` | `bool` | `false` | Show the date. Never shown in Unix mode. |
 | `ShowAsDayThenMonth` | `bool` | `true` | `dd MMM yyyy` when true, else `MMM dd yyyy` (analog window omits the year). |
 | `IsUTC` | `bool` | `false` | Show UTC instead of local time. |
-| `IsUnixTime` | `bool` | `false` | Show the Unix timestamp (digital clocks only; not analog/watch). |
+| `IsUnixTime` | `bool` | `false` | Show the Unix timestamp (digital clocks only; not analog/watch/world). |
 | `IsCountdownTimer` | `bool` | `false` | Count down from `CountFrom` to zero. Disabled while UTC/Unix are on. |
 | `CountFrom` | `TimeSpan` | `1 min` | Countdown start. |
 | `AlarmSound` | `AlarmSource?` | `null` | Sound played for 5s at zero; falls back to a generated beep. |
@@ -91,6 +92,23 @@ data binding requires.)
 | `DematerialiseClock` | `SciFiTheme` | `SciFiTheme` | `DrWho` |
 | `WatchClock` | `WatchTheme` | `WatchTheme` | `PixelWatch` |
 | `WatchClock` | `WatchBorderThickness` | `WatchBorderThickness` | `Medium` (digital 1/3/5px, Apple/Pixel 2/4/6px) |
+| `MultiTimeClock` | `ClockTimeZone` | `string` | `""` — `;`/`,`-delimited system timezone ids (up to 3) |
+| `MultiTimeClock` | `Face` | `MultiClockFace` | `Analog` — face style used for each zone |
+
+---
+
+## World clock (`MultiTimeClock`)
+
+Shows the local time first, then up to three time zones from `ClockTimeZone`. Each zone is rendered
+as a mini clock face of `Face` with the timezone name (e.g. "London", "Brisbane") centred above it.
+Faces lay out in a 2×2 grid, except `Valve` which stacks the clocks vertically. All zones update from
+the same tick. **UTC and Unix time do not apply** to this clock.
+
+```xml
+<clock:MultiTimeClock IsRunning="True"
+                      Face="Analog"
+                      ClockTimeZone="Europe/London;America/New_York;Asia/Tokyo" />
+```
 
 ---
 
@@ -123,6 +141,7 @@ At zero the clock raises `CountdownElapsed` and plays `AlarmSound` for five seco
 - `SciFiTheme` — `DrWho`, `StarTrek`
 - `WatchTheme` — `EightiesDigital`, `AppleWatch`, `PixelWatch`
 - `WatchBorderThickness` — `Thin`, `Medium`, `Thick`
+- `MultiClockFace` — `Analog`, `Valve`, `Flip`, `Melt`, `Beam`, `Watch`
 - `AlarmSourceKind` — `Resources`, `File`, `Url`
 
 ---
@@ -144,3 +163,8 @@ dotnet test  tests/Plugin.ClockViews.Tests                    # unit tests
 
 The Windows target is enabled unconditionally (`EnableWindowsTargeting`), so it restores/compiles on
 any host; producing a Windows *app* still requires a Windows machine.
+
+## Changelog
+
+- **1.0.1** — Added world time clocks (`MultiTimeClock`).
+- **1.0** — Initial release.
