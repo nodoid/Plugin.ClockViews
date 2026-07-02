@@ -48,6 +48,9 @@ public partial class MainPage : ContentPage
 		WatchClock.IsVisible = WatchOption.IsChecked;
 		WorldClock.IsVisible = WorldOption.IsChecked;
 
+		// The general options don't apply to the World clock.
+		OptionsSection.IsVisible = !WorldOption.IsChecked;
+
 		// Theme selectors only apply to their clock.
 		ThemePanel.IsVisible = BeamOption.IsChecked;
 		WatchThemePanel.IsVisible = WatchOption.IsChecked;
