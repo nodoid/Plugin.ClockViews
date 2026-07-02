@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.Maui.Graphics;
 
 namespace Plugin.ClockViews;
@@ -36,6 +37,8 @@ public class MultiTimeClockDrawable : IDrawable
     public bool IsSecondsShown { get; set; }
     public bool Is24Hour { get; set; } = true;
     public bool ColonLit { get; set; } = true;
+    public bool ShowDate { get; set; }
+    public bool ShowAsDayThenMonth { get; set; } = true;
     public SciFiTheme SciFiTheme { get; set; } = SciFiTheme.DrWho;
     public WatchTheme WatchTheme { get; set; } = WatchTheme.PixelWatch;
     public Color DigitColor { get; set; } = Colors.Black;
@@ -94,24 +97,30 @@ public class MultiTimeClockDrawable : IDrawable
 
     void DrawFace(ICanvas canvas, RectF rect, DateTime t)
     {
+        string? window = ShowDate ? t.ToString(ShowAsDayThenMonth ? "dd MMM" : "MMM dd", CultureInfo.InvariantCulture) : null;
+        string? footer = ShowDate ? t.ToString(ShowAsDayThenMonth ? "dd MMM yyyy" : "MMM dd yyyy", CultureInfo.InvariantCulture) : null;
+
         switch (Face)
         {
             case MultiClockFace.Valve:
                 _valve.Digits = ValveDisplay.Digits(t.TimeOfDay, IsSecondsShown);
                 _valve.ColonAfter = IsSecondsShown ? new[] { 1, 3 } : new[] { 1 };
                 _valve.ColonLit = ColonLit;
+                _valve.DateText = footer;
                 _valve.Draw(canvas, rect);
                 break;
 
             case MultiClockFace.Flip:
                 _flip.Panels = FlipPanels(t);
                 _flip.DigitColor = DigitColor;
+                _flip.DateText = footer;
                 _flip.Draw(canvas, rect);
                 break;
 
             case MultiClockFace.Melt:
                 _melt.Cells = MeltCells(t);
                 _melt.DigitColor = DigitColor;
+                _melt.DateText = footer;
                 _melt.Draw(canvas, rect);
                 break;
 
@@ -119,6 +128,7 @@ public class MultiTimeClockDrawable : IDrawable
                 _demat.Cells = DematCells(t);
                 _demat.DigitColor = DigitColor;
                 _demat.Theme = SciFiTheme;
+                _demat.DateText = footer;
                 _demat.Draw(canvas, rect);
                 break;
 
@@ -129,6 +139,8 @@ public class MultiTimeClockDrawable : IDrawable
                 _watch.ColonLit = ColonLit;
                 _watch.Theme = WatchTheme;
                 _watch.AccentColor = DigitColor;
+                _watch.DateText = footer;
+                _watch.DateDigits = ShowDate ? t.ToString(ShowAsDayThenMonth ? "ddMMyyyy" : "MMddyyyy", CultureInfo.InvariantCulture) : null;
                 _watch.Draw(canvas, rect);
                 break;
 
@@ -137,6 +149,7 @@ public class MultiTimeClockDrawable : IDrawable
                 _analog.ShowSecondHand = IsSecondsShown;
                 _analog.FaceColor = DigitColor;
                 _analog.HandColor = DigitColor;
+                _analog.DateText = window;
                 _analog.Draw(canvas, rect);
                 break;
         }

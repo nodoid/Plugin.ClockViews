@@ -47,19 +47,6 @@
                 </HorizontalStackLayout>
             </VerticalStackLayout>
 
-            <!-- World face selector (applies to the World clock) -->
-            <VerticalStackLayout x:Name="WorldFacePanel" Spacing="8" HorizontalOptions="Center" IsVisible="False">
-                <Label Text="World face" HorizontalOptions="Center" />
-                <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center">
-                    <RadioButton x:Name="FaceAnalogOption" Content="Analog" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
-                    <RadioButton x:Name="FaceValveOption" Content="Valve" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
-                    <RadioButton x:Name="FaceFlipOption" Content="Flip" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
-                    <RadioButton x:Name="FaceMeltOption" Content="Melt" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
-                    <RadioButton x:Name="FaceBeamOption" Content="Beam" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
-                    <RadioButton x:Name="FaceWatchOption" Content="Watch" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
-                </FlexLayout>
-            </VerticalStackLayout>
-
             <!-- Clock display (only the selected type is visible) -->
             <clock:ClockView
                 x:Name="AnalogClock"
@@ -152,13 +139,14 @@
                 <Label Grid.Row="4" Grid.Column="0" Text="Date: day first" VerticalOptions="Center" />
                 <Switch Grid.Row="4" Grid.Column="1" IsToggled="True" Toggled="OnDayThenMonthToggled" />
 
-                <Label Grid.Row="5" Grid.Column="0" Text="UTC" VerticalOptions="Center" />
+                <Label x:Name="UtcLabel" Grid.Row="5" Grid.Column="0" Text="UTC" VerticalOptions="Center" />
                 <Switch x:Name="UtcSwitch" Grid.Row="5" Grid.Column="1" Toggled="OnUtcToggled" />
 
                 <Label x:Name="UnixLabel" Grid.Row="6" Grid.Column="0" Text="Unix time (not analog or watch)" VerticalOptions="Center" IsEnabled="False" />
                 <Switch x:Name="UnixSwitch" Grid.Row="6" Grid.Column="1" Toggled="OnUnixToggled" IsEnabled="False" />
             </Grid>
 
+            <VerticalStackLayout x:Name="CountdownSection" Spacing="24">
             <Label
                 Text="Countdown (from 10s, alarms at zero)"
                 Style="{StaticResource SubHeadline}"
@@ -174,6 +162,7 @@
                 <Button x:Name="StopButton" Text="Stop" Clicked="OnStopClicked" IsEnabled="False" />
                 <Button x:Name="ResetButton" Text="Reset" Clicked="OnResetClicked" IsEnabled="False" />
             </HorizontalStackLayout>
+            </VerticalStackLayout>
 
             </VerticalStackLayout>
 

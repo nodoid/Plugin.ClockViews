@@ -10,7 +10,6 @@ public partial class MainPage : ContentPage
 		// so it doesn't depend on load-time CheckedChanged ordering.
 		AnalogOption.IsChecked = true;
 		WatchPixelOption.IsChecked = true;  // default watch theme
-		FaceAnalogOption.IsChecked = true;  // default world face
 		UpdateClockVisibility();
 		UpdateOptionAvailability();
 
@@ -48,31 +47,17 @@ public partial class MainPage : ContentPage
 		WatchClock.IsVisible = WatchOption.IsChecked;
 		WorldClock.IsVisible = WorldOption.IsChecked;
 
-		// The general options don't apply to the World clock.
-		OptionsSection.IsVisible = !WorldOption.IsChecked;
+		// World shows the general options but not UTC / Unix / Countdown.
+		bool world = WorldOption.IsChecked;
+		UtcLabel.IsVisible = !world;
+		UtcSwitch.IsVisible = !world;
+		UnixLabel.IsVisible = !world;
+		UnixSwitch.IsVisible = !world;
+		CountdownSection.IsVisible = !world;
 
 		// Theme selectors only apply to their clock.
 		ThemePanel.IsVisible = BeamOption.IsChecked;
 		WatchThemePanel.IsVisible = WatchOption.IsChecked;
-		WorldFacePanel.IsVisible = WorldOption.IsChecked;
-	}
-
-	void OnWorldFaceChanged(object? sender, CheckedChangedEventArgs e)
-	{
-		if (!e.Value)
-			return;
-		if (FaceValveOption.IsChecked)
-			WorldClock.Face = MultiClockFace.Valve;
-		else if (FaceFlipOption.IsChecked)
-			WorldClock.Face = MultiClockFace.Flip;
-		else if (FaceMeltOption.IsChecked)
-			WorldClock.Face = MultiClockFace.Melt;
-		else if (FaceBeamOption.IsChecked)
-			WorldClock.Face = MultiClockFace.Beam;
-		else if (FaceWatchOption.IsChecked)
-			WorldClock.Face = MultiClockFace.Watch;
-		else
-			WorldClock.Face = MultiClockFace.Analog;
 	}
 
 	void OnThemeChanged(object? sender, CheckedChangedEventArgs e)

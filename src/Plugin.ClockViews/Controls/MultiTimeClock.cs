@@ -88,6 +88,8 @@ public class MultiTimeClock : ClockViewBase
         _drawable.IsSecondsShown = IsSecondsShown;
         _drawable.Is24Hour = Is24HourClock;
         _drawable.ColonLit = !IsRunning || DateTime.Now.Millisecond < 500;
+        _drawable.ShowDate = ShowDate;
+        _drawable.ShowAsDayThenMonth = ShowAsDayThenMonth;
         _drawable.DigitColor = ClockColor;
         Invalidate();
     }
