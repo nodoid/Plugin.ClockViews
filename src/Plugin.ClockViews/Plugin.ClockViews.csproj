@@ -21,8 +21,8 @@
 		<Authors>Paul F. Johnson</Authors>
 		<Copyright>Paul F Johnson</Copyright>
 		<PackageTags>maui;clock;analog-clock;digital-clock;control;view</PackageTags>
-		<Version>1.0</Version>
-		<PackageReleaseNotes>Initial release</PackageReleaseNotes>
+		<Version>1.0.1</Version>
+		<PackageReleaseNotes>1.0.1: Added world time clocks. 1.0: Initial release.</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageProjectUrl>https://github.com/nodoid/Plugin.ClockViews</PackageProjectUrl>

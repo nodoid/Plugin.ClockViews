@@ -9,7 +9,8 @@ public partial class MainPage : ContentPage
 		// Set the initial selection and visibility explicitly, after the tree is built,
 		// so it doesn't depend on load-time CheckedChanged ordering.
 		AnalogOption.IsChecked = true;
-		WatchPixelOption.IsChecked = true; // default watch theme
+		WatchPixelOption.IsChecked = true;  // default watch theme
+		FaceAnalogOption.IsChecked = true;  // default world face
 		UpdateClockVisibility();
 		UpdateOptionAvailability();
 
@@ -19,10 +20,13 @@ public partial class MainPage : ContentPage
 			clock.AlarmSound = alarm;
 	}
 
-	IEnumerable<ClockViewBase> AllClocks => new ClockViewBase[] { AnalogClock, ValveClock, FlipClock, MeltClock, DematClock, WatchClock };
+	IEnumerable<ClockViewBase> AllClocks => new ClockViewBase[] { AnalogClock, ValveClock, FlipClock, MeltClock, DematClock, WatchClock, WorldClock };
 
 	// Clocks that don't support Unix time.
-	bool UnixUnavailable => AnalogOption.IsChecked || WatchOption.IsChecked;
+	bool UnixUnavailable => AnalogOption.IsChecked || WatchOption.IsChecked || WorldOption.IsChecked;
+
+	// Clocks that don't support UTC.
+	bool UtcUnavailable => WorldOption.IsChecked;
 
 	void OnClockTypeChanged(object? sender, CheckedChangedEventArgs e)
 	{
@@ -33,7 +37,7 @@ public partial class MainPage : ContentPage
 	void UpdateClockVisibility()
 	{
 		// May fire during XAML load before the named clocks exist — guard against that.
-		if (AnalogClock is null || ValveClock is null || FlipClock is null || MeltClock is null || DematClock is null || WatchClock is null)
+		if (AnalogClock is null || ValveClock is null || FlipClock is null || MeltClock is null || DematClock is null || WatchClock is null || WorldClock is null)
 			return;
 
 		AnalogClock.IsVisible = AnalogOption.IsChecked;
@@ -42,10 +46,30 @@ public partial class MainPage : ContentPage
 		MeltClock.IsVisible = MeltOption.IsChecked;
 		DematClock.IsVisible = BeamOption.IsChecked;
 		WatchClock.IsVisible = WatchOption.IsChecked;
+		WorldClock.IsVisible = WorldOption.IsChecked;
 
 		// Theme selectors only apply to their clock.
 		ThemePanel.IsVisible = BeamOption.IsChecked;
 		WatchThemePanel.IsVisible = WatchOption.IsChecked;
+		WorldFacePanel.IsVisible = WorldOption.IsChecked;
+	}
+
+	void OnWorldFaceChanged(object? sender, CheckedChangedEventArgs e)
+	{
+		if (!e.Value)
+			return;
+		if (FaceValveOption.IsChecked)
+			WorldClock.Face = MultiClockFace.Valve;
+		else if (FaceFlipOption.IsChecked)
+			WorldClock.Face = MultiClockFace.Flip;
+		else if (FaceMeltOption.IsChecked)
+			WorldClock.Face = MultiClockFace.Melt;
+		else if (FaceBeamOption.IsChecked)
+			WorldClock.Face = MultiClockFace.Beam;
+		else if (FaceWatchOption.IsChecked)
+			WorldClock.Face = MultiClockFace.Watch;
+		else
+			WorldClock.Face = MultiClockFace.Analog;
 	}
 
 	void OnThemeChanged(object? sender, CheckedChangedEventArgs e)
@@ -187,7 +211,7 @@ public partial class MainPage : ContentPage
 
 		// Countdown is disabled when UTC or Unix time is selected, and vice versa.
 		CountdownSwitch.IsEnabled = !UtcSwitch.IsToggled && !UnixSwitch.IsToggled;
-		UtcSwitch.IsEnabled = !countdown;
+		UtcSwitch.IsEnabled = !countdown && !UtcUnavailable;
 		UnixLabel.IsEnabled = !UnixUnavailable && !countdown;
 		UnixSwitch.IsEnabled = !UnixUnavailable && !countdown;
 

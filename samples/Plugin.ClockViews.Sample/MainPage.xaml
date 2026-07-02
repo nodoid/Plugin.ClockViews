@@ -17,14 +17,15 @@
                 Style="{StaticResource SubHeadline}"
                 HorizontalOptions="Center" />
 
-            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto"
-                  ColumnSpacing="8" RowSpacing="10" WidthRequest="360" HorizontalOptions="Center">
+            <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="Auto,Auto"
+                  ColumnSpacing="8" RowSpacing="10" WidthRequest="480" HorizontalOptions="Center">
                 <RadioButton x:Name="AnalogOption" Grid.Row="0" Grid.Column="0" Content="Analog" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
                 <RadioButton x:Name="ValveOption" Grid.Row="0" Grid.Column="1" Content="Valve" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
                 <RadioButton x:Name="FlipOption" Grid.Row="0" Grid.Column="2" Content="Flip" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
-                <RadioButton x:Name="MeltOption" Grid.Row="1" Grid.Column="0" Content="Melt" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
-                <RadioButton x:Name="BeamOption" Grid.Row="1" Grid.Column="1" Content="Beam" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
-                <RadioButton x:Name="WatchOption" Grid.Row="1" Grid.Column="2" Content="Watch" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="MeltOption" Grid.Row="0" Grid.Column="3" Content="Melt" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="BeamOption" Grid.Row="1" Grid.Column="0" Content="Beam" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="WatchOption" Grid.Row="1" Grid.Column="1" Content="Watch" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
+                <RadioButton x:Name="WorldOption" Grid.Row="1" Grid.Column="2" Content="World" GroupName="clockType" HorizontalOptions="Center" CheckedChanged="OnClockTypeChanged" />
             </Grid>
 
             <!-- Sci-Fi theme selector (applies to the Beam clock) -->
@@ -44,6 +45,19 @@
                     <RadioButton x:Name="WatchAppleOption" Content="Apple" GroupName="watchTheme" CheckedChanged="OnWatchThemeChanged" />
                     <RadioButton x:Name="WatchPixelOption" Content="Pixel" GroupName="watchTheme" CheckedChanged="OnWatchThemeChanged" />
                 </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- World face selector (applies to the World clock) -->
+            <VerticalStackLayout x:Name="WorldFacePanel" Spacing="8" HorizontalOptions="Center" IsVisible="False">
+                <Label Text="World face" HorizontalOptions="Center" />
+                <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center">
+                    <RadioButton x:Name="FaceAnalogOption" Content="Analog" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
+                    <RadioButton x:Name="FaceValveOption" Content="Valve" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
+                    <RadioButton x:Name="FaceFlipOption" Content="Flip" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
+                    <RadioButton x:Name="FaceMeltOption" Content="Melt" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
+                    <RadioButton x:Name="FaceBeamOption" Content="Beam" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
+                    <RadioButton x:Name="FaceWatchOption" Content="Watch" GroupName="worldFace" Margin="8,2" CheckedChanged="OnWorldFaceChanged" />
+                </FlexLayout>
             </VerticalStackLayout>
 
             <!-- Clock display (only the selected type is visible) -->
@@ -101,6 +115,15 @@
                 WatchBorderThickness="Medium"
                 WidthRequest="300"
                 HeightRequest="170"
+                HorizontalOptions="Center" />
+
+            <clock:MultiTimeClock
+                x:Name="WorldClock"
+                IsRunning="True"
+                IsVisible="False"
+                ClockTimeZone="Europe/London;America/New_York;Asia/Tokyo"
+                WidthRequest="400"
+                HeightRequest="240"
                 HorizontalOptions="Center" />
 
             <!-- Options -->
